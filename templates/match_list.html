@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% block title %} Match List {% endblock %}
+{% block styles %}
+<style>
+    body {
+        /* additional custom styling */
+        background-color: #EAF6F6;
+    }
+
+    h3 {
+        /* additional custom styling */
+        color: #FF0063;
+        font-family: 'Bebas Neue';
+    }
+
+    p {
+        color: #2ca4a4;
+    }
+
+    .btn-outline-light:hover {
+        background-color: red;
+        border-color: red;
+        color: azure;
+    }
+
+    .btn:hover {
+        background-color: red;
+        border-color: red;
+        color: azure;
+    }
+
+    .trial {
+        color: #FF0063;
+        font-size: large;
+        font-family: 'Typo Formal Demo';
+    }
+
+    .table-body {
+        color: #008585;
+        font-family: 'Louis George Cafe';
+    }
+</style>
+{% endblock %}
+{% block navbaar %}
+<!-- Navbar -->
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-warning">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{url_for('home_page')}}">
+            <b class="fab fa-github fa-2x mx-3 ps-1">Home</b>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('login_admin')}}"><b>Admin Login</b></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('login_player')}}"><b>Player Login</b></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('match_list')}}"><b>Match History</b></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('leaderboard')}}"><b>Leaderboard</b></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('search')}}"><b>Search 1v1 </b></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- <a href="{{url_for('login_player')}}" class="btn btn-outline-light" type="submit">Logout</a> -->
+</nav>
+<!-- Navbar -->
+<!-- Navbar -->
+{% endblock %}
+
+{% block content %}
+<br>
+<div class="container">
+    <div class="col-xl-15 ">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="trial">
+                            <td>Match Id </td>
+                            <td>Player 1 Name (Team) </td>
+                            <td>Player 2 Name (Team) </td>
+                            <td>Score </td>
+                            <td>Winner </td>
+                            <td>Goal Difference</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in match_details %}
+                        <tr class="table-body">
+                            <td>{{row[0]}}</td>
+                            <td>{{row[1]}} ({{row[3]}})</td>
+                            <td>{{row[2]}} ({{row[4]}})</td>
+                            <td>{{row[5]}} - {{row[6]}}</td>
+                            {% if row[5] > row[6] %}
+                            <td>{{row[1]}}</td>
+                            {% elif row[5] < row[6] %} <td>{{row[2]}}</td>
+                                {% else %}
+                                <td>Draw..Nobody Wins</td>
+                                {% endif %}
+
+                                {% if row[5] > row[6] %}
+                                <td>{{row[5] - row[6]}}</td>
+                                {% else %}
+                                <td>{{row[6] - row[5]}}</td>
+                                {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+<!-- <table>
+    <thead>
+      <tr>
+          <th>vehicle ID</th>
+          <th>current timestamp</th>
+          <th>expiry timestamp</th>
+      </tr>
+      </thead>    
+      <tbody>
+       {% for row in data %}    
+              <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{row[1]}}</td>
+                  <td>{{row[2]}}</td>
+              </tr>
+          {% endfor %}
+      </tbody>
+  </table> -->
